@@ -23,3 +23,38 @@ si aleg fisierul: database_EC2_param.yaml
 3. Daca vreau sa introduc eu manual VPC si subnetizarile, aleg fisierul database-stack-template_introduc in template VPC si subnetizari.yaml
 
 TESTAT si chiar merge.
+
+4. aceleasi cerinte ca mai sus, decat ca adaug metadata. adica le grupez cumva pe caprarii. mediul de test si de productie. difera doar tipul
+de t2 ales
+
+database-stack-template_metadata_TEST_PROD.yaml
+
+chiar functioneaza. atentie, pot vedea cum s-a creat prin faptul ca la test- se creeaza automat t2.micro, si la productie este t2.small
+
+    AllowedValues: 
+      - Production 
+      - Test 
+    Default: Test 
+
+Mappings:
+  EnvironmentOptions:
+    Production: 
+      DbClass: db.t2.small 
+    Test:
+      DbClass: db.t2.micro 
+
+
+Summary
+Engine
+MariaDB 10.6.10
+DB instance class
+Info
+db.t2.micro
+
+pot adauga 2 template-uri. pot crea 2 medii de test si de productie. diferenta e data fix de tipul ales de t2.
+
+database-stack-template_metadata_TEST_PROD.yaml
+
+
+acesta este cel mai complet cu baza de date. pentru ca aleg si dupa medii de prod sau test.
+
