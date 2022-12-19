@@ -1,0 +1,25 @@
+aici am creata o instanta, si un DB. ca sa functioneze am avut nevoie ca inintial sa incarc alt stack - care continea crearea de VPC si de subnetizari.
+
+pe baza acesteia am putut crea instanta - care este de fapt ultima resursa adaugata.
+
+si un DB  - Maria DB - care contine de fapt o groaza de parametrizari, inclusiv sa imi extrag singura din AWS-ul meu toate sbunetizarile
+necesare.
+
+
+1. se pune primul stack - creare VPC si subnetizari.
+
+VPC_subnet.yaml
+
+2. se adauga alt stack - care pe langa faptul ca cere informatii de MariaDB, imi da posibilitatea ca sa aleg din lista de AWS ce am 
+nevoie pentru subnetizari si VPC..
+
+
+adica in loc sa aleg manual VPS, plus subnetizari, iau ce e deja selectat.
+
+si aleg fisierul: database_EC2_param.yaml
+
+
+
+3. Daca vreau sa introduc eu manual VPC si subnetizarile, aleg fisierul database-stack-template_introduc in template VPC si subnetizari.yaml
+
+TESTAT si chiar merge.
