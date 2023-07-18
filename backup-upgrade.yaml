@@ -1,7 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: >-
-  Network stack template for
-  AWS CloudFormation RIxCPGwasOc*
 Metadata: 
   AWS::CloudFormation::Interface: 
     ParameterGroups:     
@@ -9,21 +7,8 @@ Metadata:
       - Label: 
           default: "Instances configuration"
         Parameters:
-          - ProbeType
+          - AmiId1     
           - AnsibleAmiId
-          - ProbeAmiId1
-          - ProbeAmiId2
-          - ProbeAmiId3
-          - ProbeAmiId4
-          - ProbeAmiId5
-          - CICDlive
-          - CICDcs
-          - CICDkfk1
-          - CICDkfk2
-          - CICDmed1
-          - CICDefb
-          - CICDeom
-          - CICDagg1
 
 
       - Label:
@@ -35,11 +20,11 @@ Parameters:
   AnsibleAmiId:
     Description: AMI ID to be used for MClaw Ansible
     Type: 'AWS::EC2::Image::Id'
-    Default: ami-0010d7352a1e72024
+    Default: ami-0010d735xxxxxxx
     ConstraintDescription: must be the name of an existing AMI ID        
   
   ProbeType:
-    Description: EC2 MClaw Probe Instance Type
+    Description: EC2
     Type: String
     Default: c5.2xlarge
     AllowedValues:
@@ -51,82 +36,10 @@ Parameters:
       - c5.2xlarge
     ConstraintDescription: must be a valid EC2 instance type.
     
-  ProbeAmiId1:
-    Description: AMI ID to be used for MClaw Probe
+  AmiId1:
+    Description: AMI ID to be use
     Type: 'AWS::EC2::Image::Id'
-    Default: ami-0f344cc0f98dbe740
-    ConstraintDescription: must be the name of an existing AMI ID
-
-  ProbeAmiId2:
-    Description: AMI ID to be used for MClaw Probe
-    Type: 'AWS::EC2::Image::Id'
-    Default: ami-0b08f6fcffc577a73
-    ConstraintDescription: must be the name of an existing AMI ID  
-
-  ProbeAmiId3:
-    Description: AMI ID to be used for MClaw Probe
-    Type: 'AWS::EC2::Image::Id'
-    Default: ami-0606fd0c6a4658380
-    ConstraintDescription: must be the name of an existing AMI ID
-
-  ProbeAmiId4:
-    Description: AMI ID to be used for MClaw Probe
-    Type: 'AWS::EC2::Image::Id'
-    Default: ami-00a0f9b411e6351a7
-    ConstraintDescription: must be the name of an existing AMI ID
-
-  ProbeAmiId5:
-    Description: AMI ID to be used for MClaw Probe
-    Type: 'AWS::EC2::Image::Id'
-    Default: ami-0b56f22c5f7c0b1d5
-    ConstraintDescription: must be the name of an existing AMI ID
-  
-  CICDlive:
-    Description: AMI ID to be used for MClaw Live
-    Type: 'AWS::EC2::Image::Id'
-    Default: ami-013a6a3c87ec653dd
-    ConstraintDescription: must be the name of an existing AMI ID
-  
-  CICDcs:
-    Description: AMI ID to be used for MClaw CS
-    Type: 'AWS::EC2::Image::Id'
-    Default: ami-0e295e0bcefb88e5b
-    ConstraintDescription: must be the name of an existing AMI ID
-
-  CICDkfk1:
-    Description: AMI ID to be used for MClaw kfk1
-    Type: 'AWS::EC2::Image::Id'
-    Default: ami-0e901b345004d5c35
-    ConstraintDescription: must be the name of an existing AMI ID
-
-  CICDkfk2:
-    Description: AMI ID to be used for MClaw kfk2
-    Type: 'AWS::EC2::Image::Id'
-    Default: ami-059ef5af9ac8def2e
-    ConstraintDescription: must be the name of an existing AMI ID
-
-  CICDmed1:
-    Description: AMI ID to be used for MClaw med1
-    Type: 'AWS::EC2::Image::Id'
-    Default: ami-035d3c5d98e0761dd
-    ConstraintDescription: must be the name of an existing AMI ID
-
-  CICDefb:
-    Description: AMI ID to be used for MClaw efb
-    Type: 'AWS::EC2::Image::Id'
-    Default: ami-0d31f3e18f9120c2e
-    ConstraintDescription: must be the name of an existing AMI ID
-
-  CICDeom:
-    Description: AMI ID to be used for MClaw eom
-    Type: 'AWS::EC2::Image::Id'
-    Default: ami-0270857f505322219
-    ConstraintDescription: must be the name of an existing AMI ID
-  
-  CICDagg1:
-    Description: AMI ID to be used for MClaw agg1
-    Type: 'AWS::EC2::Image::Id'
-    Default: ami-0a970bc8bf2df4adb
+    Default: ami-0f34xxxxxxxxx
     ConstraintDescription: must be the name of an existing AMI ID
 
 
@@ -136,7 +49,7 @@ Resources:
   Vpc:
     Type: AWS::EC2::VPC
     Properties:
-      CidrBlock: 172.31.0.0/16
+      CidrBlock: 100.31.0.0/16
       EnableDnsSupport: true
       EnableDnsHostnames: true
       Tags:
@@ -187,7 +100,7 @@ Resources:
       AvailabilityZone: !Select
           - 0
           - Fn::GetAZs: !Ref 'AWS::Region'
-      CidrBlock: 172.31.0.0/24
+      CidrBlock: 100.31.0.0/24
       MapPublicIpOnLaunch: 'true'
       VpcId: !Ref Vpc
       Tags:
@@ -207,7 +120,7 @@ Resources:
       AvailabilityZone: !Select
           - 0
           - Fn::GetAZs: !Ref 'AWS::Region'
-      CidrBlock: 172.31.10.0/24
+      CidrBlock: 100.31.10.0/24
       VpcId: !Ref Vpc
       Tags:
         - Key: Name
@@ -245,27 +158,8 @@ Resources:
           IpProtocol: tcp
           FromPort: '1024'
           ToPort: '65535'
-          CidrIp: 172.31.0.0/16
-        - 
-          IpProtocol: udp
-          FromPort: '4789'
-          ToPort: '4789'
-          CidrIp: 172.31.0.0/16     
-        - 
-          IpProtocol: tcp
-          FromPort: '2181'
-          ToPort: '2181'
-          CidrIp: 0.0.0.0/0
-        - 
-          IpProtocol: tcp
-          FromPort: '9092'
-          ToPort: '9092'
-          CidrIp: 0.0.0.0/0
-        - 
-          IpProtocol: tcp
-          FromPort: '2888'
-          ToPort: '3888'
-          CidrIp: 0.0.0.0/0  
+          CidrIp: 100.31.0.0/16
+      
       Tags:
         - Key: Name
           Value: !Sub '${AWS::StackName}-WebServerSG'
@@ -287,7 +181,7 @@ Resources:
             - !Ref CICDSecurityGroup
           DeviceIndex: '0'
           AssociatePublicIpAddress: 'true'
-          PrivateIpAddress: 172.31.0.201 
+          PrivateIpAddress: 100.31.0.201 
           DeleteOnTermination: 'true'
           SubnetId: !Ref PublicSubnet1
       BlockDeviceMappings:
@@ -297,11 +191,7 @@ Resources:
             VolumeSize: '150'
             DeleteOnTermination: 'true'
       UserData:
-        Fn::Base64: !Sub |
-          #!/bin/bash   
-          su - mclaw -c 'qmon config -d 1'
-          sleep 300
-          su - mclaw -c 'qmon config -d 0'
+  
 
   MClawProbe1:
     Type: 'AWS::EC2::Instance'
@@ -321,14 +211,14 @@ Resources:
             
           AssociatePublicIpAddress: 'false'
           DeviceIndex: '0'
-          PrivateIpAddress: 172.31.0.26
+          PrivateIpAddress: 100.31.0.26
           DeleteOnTermination: 'true'
           SubnetId: !Ref PublicSubnet1
         - GroupSet:
             - !Ref CICDSecurityGroup
           AssociatePublicIpAddress: 'false'
           DeviceIndex: '1'
-          PrivateIpAddress: 172.31.10.26
+          PrivateIpAddress: 100.31.10.26
           DeleteOnTermination: 'true'
           SubnetId: !Ref PrivateSubnet2
       BlockDeviceMappings:
@@ -338,407 +228,7 @@ Resources:
             VolumeSize: '500'
             DeleteOnTermination: 'true'      
 
-  MClawProbe2:
-    Type: 'AWS::EC2::Instance'
-    DependsOn: InternetGateway
-    Properties:
-      ImageId: !Ref ProbeAmiId2
-      InstanceType: !Ref ProbeType
-      Tags:
-        - Key: Name
-          Value: !Join
-                 - ''
-                 - - 'Probe2 '
-                   - !Ref 'AWS::StackName'
-      NetworkInterfaces:
-        - GroupSet:
-            - !Ref CICDSecurityGroup
-            
-          AssociatePublicIpAddress: 'false'
-          DeviceIndex: '0'
-          PrivateIpAddress: 172.31.0.27
-          DeleteOnTermination: 'true'
-          SubnetId: !Ref PublicSubnet1
-        - GroupSet:
-            - !Ref CICDSecurityGroup
-          AssociatePublicIpAddress: 'false'
-          DeviceIndex: '1'
-          PrivateIpAddress: 172.31.10.28
-          DeleteOnTermination: 'true'
-          SubnetId: !Ref PrivateSubnet2
-      BlockDeviceMappings:
-        - DeviceName: /dev/sda1
-          Ebs:
-            VolumeType: gp2
-            VolumeSize: '500'
-            DeleteOnTermination: 'true'    
-  
-  MClawProbe3:
-    Type: 'AWS::EC2::Instance'
-    DependsOn: InternetGateway
-    Properties:
-      ImageId: !Ref ProbeAmiId3
-      InstanceType: !Ref ProbeType
-      Tags:
-        - Key: Name
-          Value: !Join
-                 - ''
-                 - - 'Probe3 '
-                   - !Ref 'AWS::StackName'
-      NetworkInterfaces:
-        - GroupSet:
-            - !Ref CICDSecurityGroup
-            
-          AssociatePublicIpAddress: 'false'
-          DeviceIndex: '0'
-          PrivateIpAddress: 172.31.0.28
-          DeleteOnTermination: 'true'
-          SubnetId: !Ref PublicSubnet1
-        - GroupSet:
-            - !Ref CICDSecurityGroup
-          AssociatePublicIpAddress: 'false'
-          DeviceIndex: '1'
-          PrivateIpAddress: 172.31.10.29
-          DeleteOnTermination: 'true'
-          SubnetId: !Ref PrivateSubnet2
-      BlockDeviceMappings:
-        - DeviceName: /dev/sda1
-          Ebs:
-            VolumeType: gp2
-            VolumeSize: '500'
-            DeleteOnTermination: 'true'    
-  MClawProbe4:
-    Type: 'AWS::EC2::Instance'
-    DependsOn: InternetGateway
-    Properties:
-      ImageId: !Ref ProbeAmiId4
-      InstanceType: !Ref ProbeType
-      Tags:
-        - Key: Name
-          Value: !Join
-                 - ''
-                 - - 'Probe4 '
-                   - !Ref 'AWS::StackName'
-      NetworkInterfaces:
-        - GroupSet:
-            - !Ref CICDSecurityGroup
-            
-          AssociatePublicIpAddress: 'false'
-          DeviceIndex: '0'
-          PrivateIpAddress: 172.31.0.29
-          DeleteOnTermination: 'true'
-          SubnetId: !Ref PublicSubnet1
-        - GroupSet:
-            - !Ref CICDSecurityGroup
-          AssociatePublicIpAddress: 'false'
-          DeviceIndex: '1'
-          PrivateIpAddress: 172.31.10.120
-          DeleteOnTermination: 'true'
-          SubnetId: !Ref PrivateSubnet2
-      BlockDeviceMappings:
-        - DeviceName: /dev/sda1
-          Ebs:
-            VolumeType: gp2
-            VolumeSize: '500'
-            DeleteOnTermination: 'true'    
 
-  MClawProbe5:
-    Type: 'AWS::EC2::Instance'
-    DependsOn: InternetGateway
-    Properties:
-      ImageId: !Ref ProbeAmiId5
-      InstanceType: !Ref ProbeType
-      Tags:
-        - Key: Name
-          Value: !Join
-                 - ''
-                 - - 'Probe5 '
-                   - !Ref 'AWS::StackName'
-      NetworkInterfaces:
-        - GroupSet:
-            - !Ref CICDSecurityGroup
-            
-          AssociatePublicIpAddress: 'false'
-          DeviceIndex: '0'
-          PrivateIpAddress: 172.31.0.30
-          DeleteOnTermination: 'true'
-          SubnetId: !Ref PublicSubnet1
-        - GroupSet:
-            - !Ref CICDSecurityGroup
-          AssociatePublicIpAddress: 'false'
-          DeviceIndex: '1'
-          PrivateIpAddress: 172.31.10.240
-          DeleteOnTermination: 'true'
-          SubnetId: !Ref PrivateSubnet2
-      BlockDeviceMappings:
-        - DeviceName: /dev/sda1
-          Ebs:
-            VolumeType: gp2
-            VolumeSize: '500'
-            DeleteOnTermination: 'true'      
-  CICDliveBackup:
-    Type: 'AWS::EC2::Instance'
-    DependsOn: CICDcsBackup
-    Properties:
-      ImageId: !Ref CICDlive
-      InstanceType: c5.2xlarge
-      Tags:
-        - Key: Name
-          Value: !Join
-                 - ''
-                 - - 'live '
-                   - !Ref 'AWS::StackName'
-      NetworkInterfaces:
-        - GroupSet:
-            - !Ref CICDSecurityGroup
-          DeviceIndex: '0'
-          AssociatePublicIpAddress: 'false'
-          PrivateIpAddress: 172.31.0.16
-          DeleteOnTermination: 'true'
-          SubnetId: !Ref PublicSubnet1
-      BlockDeviceMappings:
-        - DeviceName: /dev/sda1
-          Ebs:
-            VolumeType: gp2
-            VolumeSize: '300'
-            DeleteOnTermination: 'false'
-      UserData:
-        Fn::Base64: !Sub |
-          #!/bin/bash   
-          su - mclaw -c 'qmon config -d 1'
-          sleep 300
-          su - mclaw -c 'qmon config -d 0'      
-
-  CICDcsBackup:
-    Type: 'AWS::EC2::Instance'
-    Properties:
-      ImageId: !Ref CICDcs
-      InstanceType: c5.2xlarge
-      Tags:
-        - Key: Name
-          Value: !Join
-                 - ''
-                 - - 'cs '
-                   - !Ref 'AWS::StackName'
-      NetworkInterfaces:
-        - GroupSet:
-            - !Ref CICDSecurityGroup
-          DeviceIndex: '0'
-          AssociatePublicIpAddress: 'true'
-          PrivateIpAddress: 172.31.0.10
-          DeleteOnTermination: 'true'
-          SubnetId: !Ref PublicSubnet1
-      BlockDeviceMappings:
-        - DeviceName: /dev/sda1
-          Ebs:
-            VolumeType: gp2
-            VolumeSize: '200'
-            DeleteOnTermination: 'true'
-      UserData:
-        Fn::Base64: !Sub |
-          #!/bin/bash  
-          sleep 300 
-          su - mclaw -c 'q7adm start'
-
-  CICDkfk1Backup:
-    Type: 'AWS::EC2::Instance'
-    DependsOn: CICDcsBackup
-    Properties:
-      ImageId: !Ref CICDkfk1
-      InstanceType: c5.xlarge
-      Tags:
-        - Key: Name
-          Value: !Join
-                 - ''
-                 - - 'kfk1 '
-                   - !Ref 'AWS::StackName'
-      NetworkInterfaces:
-        - GroupSet:
-            - !Ref CICDSecurityGroup
-          DeviceIndex: '0'
-          AssociatePublicIpAddress: 'false'
-          PrivateIpAddress: 172.31.0.17
-          DeleteOnTermination: 'true'
-          SubnetId: !Ref PublicSubnet1
-      BlockDeviceMappings:
-        - DeviceName: /dev/sda1
-          Ebs:
-            VolumeType: gp2
-            VolumeSize: '150'
-            DeleteOnTermination: 'true'
-      UserData:
-        Fn::Base64: !Sub |
-          #!/bin/bash   
-          su - mclaw -c 'qmon config -d 1'
-          sleep 300
-          su - mclaw -c 'qmon config -d 0' 
-               
-
-  CICDkfk2Backup:
-    Type: 'AWS::EC2::Instance'
-    DependsOn: CICDcsBackup
-    Properties:
-      ImageId: !Ref CICDkfk2
-      InstanceType: c5.xlarge
-      Tags:
-        - Key: Name
-          Value: !Join
-                 - ''
-                 - - 'kfk2 '
-                   - !Ref 'AWS::StackName'
-      NetworkInterfaces:
-        - GroupSet:
-            - !Ref CICDSecurityGroup
-          DeviceIndex: '0'
-          AssociatePublicIpAddress: 'false'
-          PrivateIpAddress: 172.31.0.18
-          DeleteOnTermination: 'true'
-          SubnetId: !Ref PublicSubnet1
-      BlockDeviceMappings:
-        - DeviceName: /dev/sda1
-          Ebs:
-            VolumeType: gp2
-            VolumeSize: '150'
-            DeleteOnTermination: 'true'
-      UserData:
-        Fn::Base64: !Sub |
-          #!/bin/bash   
-          su - mclaw -c 'qmon config -d 1'
-          sleep 300
-          su - mclaw -c 'qmon config -d 0'      
-
-  CICDmed1Backup:
-    Type: 'AWS::EC2::Instance'
-    DependsOn: CICDcsBackup
-    Properties:
-      ImageId: !Ref CICDmed1
-      InstanceType: c5.4xlarge
-      Tags:
-        - Key: Name
-          Value: !Join
-                 - ''
-                 - - 'med1 '
-                   - !Ref 'AWS::StackName'
-      NetworkInterfaces:
-        - GroupSet:
-            - !Ref CICDSecurityGroup
-          DeviceIndex: '0'
-          AssociatePublicIpAddress: 'false'
-          PrivateIpAddress: 172.31.0.14 
-          DeleteOnTermination: 'true'
-          SubnetId: !Ref PublicSubnet1
-      BlockDeviceMappings:
-        - DeviceName: /dev/sda1
-          Ebs:
-            VolumeType: gp2
-            VolumeSize: '200'
-            DeleteOnTermination: 'true'
-      UserData:
-        Fn::Base64: !Sub |
-          #!/bin/bash   
-          rm /opt/anritsu/mclaw/data/eoxdr-srv/xdr/generations 
-          su - mclaw -c 'qmon config -d 1'
-          sleep 300
-          su - mclaw -c 'q7adm start mcls'
-          su - mclaw -c 'qmon config -d 0'
-  
-
-  CICDefbBackup:
-    Type: 'AWS::EC2::Instance'
-    DependsOn: CICDcsBackup
-    Properties:
-      ImageId: !Ref CICDefb
-      InstanceType: c5.4xlarge
-      Tags:
-        - Key: Name
-          Value: !Join
-                 - ''
-                 - - 'efb '
-                   - !Ref 'AWS::StackName'
-      NetworkInterfaces:
-        - GroupSet:
-            - !Ref CICDSecurityGroup
-          DeviceIndex: '0'
-          AssociatePublicIpAddress: 'false'
-          PrivateIpAddress: 172.31.0.19
-          DeleteOnTermination: 'true'
-          SubnetId: !Ref PublicSubnet1
-      BlockDeviceMappings:
-        - DeviceName: /dev/sda1
-          Ebs:
-            VolumeType: gp2
-            VolumeSize: '500'
-            DeleteOnTermination: 'true'
-      UserData:
-        Fn::Base64: !Sub |
-          #!/bin/bash   
-          su - mclaw -c 'qmon config -d 1'
-          sleep 300
-          su - mclaw -c 'qmon config -d 0'      
-
-  CICDeomBackup:
-    Type: 'AWS::EC2::Instance'
-    DependsOn: CICDcsBackup
-    Properties:
-      ImageId: !Ref CICDeom
-      InstanceType: c5.4xlarge
-      Tags:
-        - Key: Name
-          Value: !Join
-                 - ''
-                 - - 'eom '
-                   - !Ref 'AWS::StackName'
-      NetworkInterfaces:
-        - GroupSet:
-            - !Ref CICDSecurityGroup
-          DeviceIndex: '0'
-          AssociatePublicIpAddress: 'false'
-          PrivateIpAddress: 172.31.0.24
-          DeleteOnTermination: 'true'
-          SubnetId: !Ref PublicSubnet1
-      BlockDeviceMappings:
-        - DeviceName: /dev/sda1
-          Ebs:
-            VolumeType: gp2
-            VolumeSize: '150'
-            DeleteOnTermination: 'true'
-
-  CICDagg1Backup:
-    Type: 'AWS::EC2::Instance'
-    DependsOn: CICDcsBackup
-    Properties:
-      ImageId: !Ref CICDagg1
-      InstanceType: c5.xlarge
-      Tags:
-        - Key: Name
-          Value: !Join
-                 - ''
-                 - - 'agg1 '
-                   - !Ref 'AWS::StackName'
-      NetworkInterfaces:
-        - GroupSet:
-            - !Ref CICDSecurityGroup
-          DeviceIndex: '0'
-          AssociatePublicIpAddress: 'false'
-          PrivateIpAddress: 172.31.0.15
-          DeleteOnTermination: 'true'
-          SubnetId: !Ref PublicSubnet1
-      BlockDeviceMappings:
-        - DeviceName: /dev/sda1
-          Ebs:
-            VolumeType: gp2
-            VolumeSize: '150'
-            DeleteOnTermination: 'true'
-      UserData:
-        Fn::Base64: !Sub |
-          #!/bin/bash
-          rm /opt/anritsu/mclaw/data/eoxdr-srv/xdr/generations
-          su - mclaw -c 'qmon config -d 1'
-          sleep 300
-          su - mclaw -c 'qmon config -d 0' 
-
-
-          
 
 Outputs:
   VpcId:
